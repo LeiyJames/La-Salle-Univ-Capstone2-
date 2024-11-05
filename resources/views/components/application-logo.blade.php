@@ -1,0 +1,1 @@
+<img src="{{ asset('assets/img/lsu-logotype-white 1.png') }}" alt="" {{ $attributes }}>
