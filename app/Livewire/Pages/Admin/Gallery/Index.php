@@ -9,23 +9,42 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $search;
-    public $status;
-    public $edit_gallery_slider = false;
+    public $tab = 'all'; // all, active, inactive
+    public $sortField = 'created_at';
+    public $sortDirection = 'desc';
+    public $perPage = 10;
     public $delete_gallery_modal = false;
 
-    public function updatedSearch()
+    protected $queryString = [
+        'tab' => ['except' => 'all'],
+    ];
+
+    public function updatedTab()
     {
         $this->resetPage();
     }
 
-    public function galleries()
+    public function setTab($tab)
     {
-        return Gallery::where(function ($gallery) {
-            $gallery->when($this->status, function ($query, $status) {
-                $query->where('galleries_status', $status);
-            });
-        });
+        $this->tab = $tab;
+        $this->resetPage();
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function toggleStatus($id)
+    {
+        $gallery = Gallery::findOrFail($id);
+        $gallery->galleries_status = !$gallery->galleries_status;
+        $gallery->save();
     }
 
     public function delete($id)
@@ -36,8 +55,25 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.pages.admin.gallery.index')->extends('layouts.admin.app')->with([
-            'data' => $this->galleries()->paginate(10)
-        ]);
+        $counts = [
+            'all' => Gallery::count(),
+            'active' => Gallery::where('galleries_status', true)->count(),
+            'inactive' => Gallery::where('galleries_status', false)->count(),
+        ];
+
+        $query = Gallery::query();
+
+        if ($this->tab === 'active') {
+            $query->where('galleries_status', true);
+        } elseif ($this->tab === 'inactive') {
+            $query->where('galleries_status', false);
+        }
+
+        $galleries = $query->orderBy($this->sortField, $this->sortDirection)->paginate($this->perPage);
+
+        return view('livewire.pages.admin.gallery.index', [
+            'data' => $galleries,
+            'counts' => $counts,
+        ])->extends('layouts.admin.app');
     }
 }

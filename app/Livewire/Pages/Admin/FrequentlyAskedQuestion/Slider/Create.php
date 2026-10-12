@@ -11,6 +11,12 @@ class Create extends Component
     public $slider;
     public $faq;
 
+    protected $rules = [
+        'faq.faqs_question' => 'required|string|min:3',
+        'faq.faqs_answer' => 'required|string|min:3',
+        'faq.faqs_status' => 'required',
+    ];
+
     public function mount()
     {
         $this->resetComponents();
@@ -27,15 +33,16 @@ class Create extends Component
 
     public function save()
     {
+        $this->validate();
+
         try {
             DB::transaction(function () {
                 FAQ::create($this->faq);
-
-                return redirect()->route('admin.frequently-asked-question');
             });
+
+            return redirect()->route('admin.frequently-asked-question');
         } catch (\Exception $e) {
-            //throw $e;
-            dd($e);
+            session()->flash('error', $e->getMessage());
         }
     }
 

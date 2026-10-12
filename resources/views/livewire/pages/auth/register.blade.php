@@ -23,15 +23,19 @@ new #[Layout('layouts.guest')] class extends Component
     public function register(): void
     {
         $validated = $this->validate([
-            'users_family_name' => ['required', 'string', 'max:255'],
-            'users_given_name' => ['required', 'string', 'max:255'],
+            'family_name' => ['required', 'string', 'max:255'],
+            'given_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered($user = User::create($validated)));
+        event(new Registered($user = User::create([
+            'users_family_name' => $validated['family_name'],
+            'users_given_name' => $validated['given_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'users_role' => 'student',
+        ])));
 
         Auth::login($user);
 
@@ -66,8 +70,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="password" id="password" class="block w-full mt-1"
-                            type="password"
+            <x-password-input wire:model="password" id="password" class="block w-full mt-1"
                             name="password"
                             required autocomplete="new-password" />
 
@@ -78,8 +81,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block w-full mt-1"
-                            type="password"
+            <x-password-input wire:model="password_confirmation" id="password_confirmation" class="block w-full mt-1"
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />

@@ -1,66 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# La Salle University Website of Student Events
+> **BSIT Capstone 2 Project** &bull; 4th Year Bachelor of Science in Information Technology  
+> **Institution:** La Salle University – Ozamiz City  
+> **Project Team:**
+> - **Leigh James Presno**
+> - **Lucy Mae Tan**
+> - **Femarie Corpuz**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## 📌 Project Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The **La Salle University Website of Student Events** is a centralized, interactive web application developed as a 4th-year Capstone 2 project for the BSIT program at La Salle University. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Designed in close alignment with the **Student Activities Center (SAC)** and campus organizations, the platform streamlines the discovery, promotion, scheduling, and administration of university events. It bridges the gap between campus organizers and the student body by replacing fragmented social media announcements with an authoritative, unified digital hub.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ Features Showcase
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🎓 1. Public & Student Portal
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 🌟 Interactive Hero Carousel & Spotlight Banner
+- **Dynamic Event Highlights:** High-impact carousel banner on the homepage showcasing major upcoming university activities, institutional assemblies, and flagship celebrations.
+- **Quick Feature Navigation:** Floating shortcut bar providing instant access to the event directory, interactive calendar, FAQ section, and SAC info.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 🔍 Real-Time Campus Event Discovery & Filtering
+- **Debounced Live Search:** Instant search functionality allowing students to search for activities by title, description, or keyword without full page reloads.
+- **Event Lifecycle Tabs:** Quick switching between **Upcoming Events** and the **Past Archive**.
+- **Department & Category Filter Chips:** One-click filtering tailored to collegiate departments and activity classifications:
+  - **Academic Departments:** CCSEA, CBA, CTE, CON
+  - **Education Levels:** Basic Education & Higher Education
+  - **Organization Types:** Academic-Based Organizations (ABO) & Interest-Based Organizations (IBO)
+  - **Special Categories:** Sports, Workshops, Seminars, and Campus-Wide Events
+- **Active Filter Indicators:** Visual chips showing active search queries with a single-click "Clear All Filters" reset button.
 
-## Laravel Sponsors
+#### 📅 Interactive Monthly Calendar of Events
+- **Month-by-Month Navigation:** Intuitive traversal across past, current, and upcoming academic months.
+- **Visual Activity Indicators:** Color-coded calendar day highlights marking days with scheduled events.
+- **Interactive Hover Tooltips:** Alpine.js-powered popover cards previewing event titles and summaries upon hovering over marked dates.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### 🏆 Spotlight Events Showcase
+- **Flagship Celebration Hub:** Dedicated showcase page designed for major multi-day university events (e.g., Intramurals, Lasallian Week, University Days).
+- **Segmented Schedule of Activities:** Separate itinerary tabs for **Basic Education** and **Higher Education**.
+- **Day-by-Day Chronological Itinerary:** Detailed schedules outlining activity names, venues, dates, and times.
+- **Affiliation Filtering:** Filter spotlight sub-events by Academic-Based or Interest-Based student organizations.
 
-### Premium Partners
+#### 📄 Comprehensive Event Details & Direct Registration
+- **High-Definition Event Posters:** Responsive media banners served through Spatie Media Library.
+- **Event Metadata Badges:** Clear display of start/end dates, campus venues/rooms, and topic tags.
+- **Direct Workshop Registration Link:** Integrated call-to-action button linking directly to external registration forms (e.g., Google Forms) for workshops and seminars requiring prior sign-ups.
+- **Related Events Carousel:** Displays recommended and related campus happenings at the bottom of the event view.
+- **Integrated Sidebar:** Includes a mini monthly calendar and a quick list of other upcoming activities.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### ❓ Searchable Student FAQ (Frequently Asked Questions)
+- **Live Searchable FAQs:** Real-time query matching across questions and answers.
+- **Student Activity Guidelines:** Clarifies procedures for student organization activity proposals, facility reservations, equipment borrowing, and SAC policies.
 
-## Contributing
+#### 🏛️ Student Activities Center (SAC) Institutional Page
+- **Vision & Mission Showcase:** Outlines the core formation principles of La Salle University student affairs.
+- **Programs & Services Breakdown:** Highlights leadership training programs (Lasallian Leadership Academy), student empowerment showcases (theater, debate, arts), and community engagement initiatives.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 🛠️ 2. Administrative & Management Portal
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 📊 Executive Admin Dashboard
+- **Real-Time Key Metrics:** High-level dashboard counters tracking:
+  - Total Events registered in the system
+  - Active & Published Events
+  - Upcoming Events scheduled for the current month
+  - Active Spotlight Programs
+  - Total Registered Users & Student Officer counts
+- **Recent Activity Feed:** Quick-reference cards showing the latest event submissions and active spotlight timelines.
 
-## Security Vulnerabilities
+#### 📝 Event Management System (Full CRUD)
+- **Event Creation & Editing:** Form with validations for title, dates, venues, organization types, custom tags, and workshop settings.
+- **Poster Media Uploader:** Secure file uploads supporting JPG, PNG, and WebP formats up to 5MB.
+- **Live Event Preview Modal:** Interactive preview allowing administrators and organizers to preview the exact event card and banner appearance prior to publishing.
+- **Status Lifecycle Toggling:** One-click toggle between **Published (Active)** and **Draft (Inactive)** modes.
+- **Multi-Tab Event Sorting:** Organized tab views for *All*, *Upcoming*, *Ongoing*, *Past*, and *Draft* events with real-time record count badges.
+- **Soft Deletion & Recovery Safeguards:** Built-in soft deletes with confirmation modals to prevent accidental permanent data loss.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### 🎯 Spotlight Event Builder
+- **Multi-Day Activity Scheduler:** Add, arrange, and manage multi-event schedules for university celebrations.
+- **Departmental Activity Partitioning:** Assign schedules specifically to Basic Education or Higher Education divisions.
+- **Custom Chronological Date Validation:** Enforces schedule integrity ensuring activity dates align within the master event timeline.
 
-## License
+#### 🖼️ Campus Gallery Manager
+- **Photo Highlights Curation:** Upload and curate campus photography, event recaps, and memorable student moments.
+- **Slide-Over Modal Interface:** Clean slide-over drawers for image uploads and metadata configuration.
+- **Visibility Control & Deletion:** Instant toggle for active gallery items and confirmation-backed deletion.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 💡 FAQ Management System
+- **Dynamic Content Administration:** Add, edit, and reorganize FAQ items for immediate publication on the public portal.
+- **Status Activation:** Control which FAQs are visible to the student body with live status toggling.
+
+#### 👥 User & Organization Officer Management
+- **Role-Based Access Control (RBAC):**
+  - **Administrator:** Full system access, event oversight, gallery control, and user provisioning.
+  - **Editor:** Student organization leaders and department coordinators with event publishing rights.
+  - **Student:** Registered student accounts.
+- **Institutional Domain Restriction:** Enforces `@lsu.edu.ph` email regex validation to guarantee accounts belong to legitimate university constituents.
+- **Organization Affiliation Tagging:** Associate user accounts with specific campus organizations and councils.
+- **Search & User Directory:** Filter users by role tabs (*All*, *Admin*, *Editor*, *Student*) with live search.
+
+#### 🔒 Profile & Credential Management
+- **Secure Account Control:** Update personal details, maintain organizational information, and update passwords with secure hashing.
+
+---
+
+## 💻 Tech Stack & Architecture
+
+- **Backend Framework:** [Laravel 10](https://laravel.com/) (PHP 8.1+)
+- **Full-Stack Reactivity:** [Laravel Livewire 3](https://livewire.laravel.com/) & [Livewire Volt](https://livewire.laravel.com/docs/volt) (Single-page app responsiveness with server-side simplicity)
+- **Frontend Styling:** [Tailwind CSS 3](https://tailwindcss.com/) with `@tailwindcss/forms`
+- **Dynamic UI Interactions:** [Alpine.js](https://alpinejs.dev/)
+- **Media Handling:** [Spatie Laravel MediaLibrary](https://spatie.be/docs/laravel-medialibrary)
+- **Database & ORM:** MySQL / MariaDB via Laravel Eloquent ORM
+- **Build Tool:** [Vite](https://vitejs.dev/)
+
+---
+
+*Developed in partial fulfillment of the requirements for **Capstone 2** at **La Salle University**.*

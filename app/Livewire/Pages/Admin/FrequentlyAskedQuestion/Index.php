@@ -9,33 +9,38 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $search;
-    public $status;
+    public $search = '';
+    public $tab = 'all'; // all, active, inactive
+    public $perPage = 10;
     public $edit_faq_slider = false;
     public $delete_faq_modal = false;
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'tab' => ['except' => 'all'],
+    ];
 
     public function updatedSearch()
     {
         $this->resetPage();
     }
 
-    public function updatedStatus($value)
+    public function updatedTab()
     {
-        $this->status = $value == 1 ? 1 : 0;
+        $this->resetPage();
     }
 
-    public function faqs()
+    public function setTab($tab)
     {
-        return FAQ::where(function ($faq) {
-            $faq->when($this->search, function ($query, $search) {
-                $query->where('faqs_question', 'LIKE', "%$search%");
-                $query->orWhere('faqs_answer', 'LIKE', "%$search%");
-            });
+        $this->tab = $tab;
+        $this->resetPage();
+    }
 
-            $faq->when(is_numeric($this->status), function ($query, $status) {
-                $query->where('faqs_status', $this->status);
-            });
-        });
+    public function toggleStatus($id)
+    {
+        $faq = FAQ::findOrFail($id);
+        $faq->faqs_status = !$faq->faqs_status;
+        $faq->save();
     }
 
     public function edit($id)
@@ -52,8 +57,32 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.pages.admin.frequently-asked-question.index')->extends('layouts.admin.app')->with([
-            'data' => $this->faqs()->paginate(10)
-        ]);
+        $counts = [
+            'all' => FAQ::count(),
+            'active' => FAQ::where('faqs_status', true)->count(),
+            'inactive' => FAQ::where('faqs_status', false)->count(),
+        ];
+
+        $query = FAQ::query();
+
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('faqs_question', 'LIKE', '%' . $this->search . '%')
+                  ->orWhere('faqs_answer', 'LIKE', '%' . $this->search . '%');
+            });
+        }
+
+        if ($this->tab === 'active') {
+            $query->where('faqs_status', true);
+        } elseif ($this->tab === 'inactive') {
+            $query->where('faqs_status', false);
+        }
+
+        $faqs = $query->latest('created_at')->paginate($this->perPage);
+
+        return view('livewire.pages.admin.frequently-asked-question.index', [
+            'data' => $faqs,
+            'counts' => $counts,
+        ])->extends('layouts.admin.app');
     }
 }

@@ -20,7 +20,7 @@ new class extends Component
     {
         $this->family_name = Auth::user()->users_family_name;
         $this->given_name = Auth::user()->users_given_name;
-        $this->email = Auth::user()->users_email;
+        $this->email = Auth::user()->email;
     }
 
     /**
@@ -31,14 +31,18 @@ new class extends Component
         $user = Auth::user();
 
         $validated = $this->validate([
-            'users_family_name' => ['required', 'string', 'max:255'],
-            'users_given_name' => ['required', 'string', 'max:255'],
-            'users_email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->users_id)],
+            'family_name' => ['required', 'string', 'max:255'],
+            'given_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class, 'email')->ignore($user->users_id, 'users_id')],
         ]);
 
-        $user->fill($validated);
+        $user->fill([
+            'users_family_name' => $validated['family_name'],
+            'users_given_name' => $validated['given_name'],
+            'email' => $validated['email'],
+        ]);
 
-        if ($user->isDirty('users_email')) {
+        if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 

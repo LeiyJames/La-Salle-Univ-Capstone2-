@@ -47,10 +47,9 @@ new #[Layout('layouts.guest')] class extends Component
         <div>
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="password"
+            <x-password-input wire:model="password"
                           id="password"
                           class="block w-full mt-1"
-                          type="password"
                           name="password"
                           required autocomplete="current-password" />
 

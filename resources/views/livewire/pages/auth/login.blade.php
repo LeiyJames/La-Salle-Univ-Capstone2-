@@ -24,10 +24,16 @@ new #[Layout('layouts.guest')] class extends Component
         $this->redirect(session('url.intended', RouteServiceProvider::HOME));
     }
 }; ?>
-<body>
-    
-</body>
 <div>
+    <div class="mb-5">
+        <a href="/" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-green-700 transition-colors" wire:navigate.hover>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span>{{ __('Back to Home') }}</span>
+        </a>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -43,8 +49,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
+            <x-password-input wire:model="form.password" id="password" class="block mt-1 w-full"
                             name="password"
                             required autocomplete="current-password" />
 

@@ -54,7 +54,7 @@ class Detail extends Component
                 }
             });
 
-            $events->where('events_id', '!=', $this->event->id);
+            $events->where('events_id', '!=', $this->event->events_id);
         });
     }
 

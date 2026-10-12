@@ -1,4 +1,7 @@
 <div>
+    @livewire('component.public.carousel', ['height' => '500'])
+    @livewire('layout.public.sub-navigation')
+
     @isset($event)
     <div class="p-4 mx-auto space-y-10 max-w-7xl lg:px-8 my-14">
         <div class="grid grid-cols-3 gap-10">
@@ -24,12 +27,31 @@
     </div>
     @endisset
 
-    <div class="p-4 mx-auto space-y-10 max-w-7xl lg:px-8 my-14">
-        <div class="flex flex-col items-center justify-between gap-3 md:flex-row">
-            <nav class="flex space-x-4" aria-label="Tabs">
-                <span @class(['cursor-pointer text-gray-500 hover:text-gray-700 font-medium', 'text-green-700' => $tab == 'current']) wire:click="setTab('current')">Schedule of Activities</span>
-                <span @class(['cursor-pointer text-gray-500 hover:text-gray-700 font-medium', 'text-green-700' => $tab == 'academic_based']) wire:click="setTab('academic_based')">Academic-Based Organization</span>
-                <span @class(['cursor-pointer text-gray-500 hover:text-gray-700 font-medium', 'text-green-700' => $tab == 'interest_based']) wire:click="setTab('interest_based')">Interest-Based Organization</span>
+    <div class="p-4 mx-auto space-y-8 max-w-7xl lg:px-8 my-10 sm:my-14">
+        <!-- Main Navigation Tabs -->
+        <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center border-b border-gray-200 pb-3">
+            <nav class="flex space-x-4 sm:space-x-8 overflow-x-auto w-full md:w-auto" aria-label="Tabs">
+                <button type="button" @class([
+                    'pb-3 text-sm sm:text-base font-bold transition-all border-b-2 whitespace-nowrap',
+                    'border-green-700 text-green-800' => $tab == 'current',
+                    'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300' => $tab != 'current'
+                ]) wire:click="setTab('current')">
+                    Schedule of Activities
+                </button>
+                <button type="button" @class([
+                    'pb-3 text-sm sm:text-base font-bold transition-all border-b-2 whitespace-nowrap',
+                    'border-green-700 text-green-800' => $tab == 'academic_based',
+                    'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300' => $tab != 'academic_based'
+                ]) wire:click="setTab('academic_based')">
+                    Academic-Based Organization
+                </button>
+                <button type="button" @class([
+                    'pb-3 text-sm sm:text-base font-bold transition-all border-b-2 whitespace-nowrap',
+                    'border-green-700 text-green-800' => $tab == 'interest_based',
+                    'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300' => $tab != 'interest_based'
+                ]) wire:click="setTab('interest_based')">
+                    Interest-Based Organization
+                </button>
             </nav>
 
             @if (in_array($tab, ['academic_based', 'interest_based']))
@@ -124,8 +146,20 @@
                     </div>
                 </div>
                 @empty
-                <div class="col-span-1 text-center md:col-span-2 lg:col-span-3">
-                    <span class="text-gray-500">No data available.</span>
+                <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                    <div class="p-8 rounded-2xl border-2 border-dashed border-gray-200 bg-white/70 text-center flex flex-col items-center justify-center space-y-3.5">
+                        <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-100/80 border border-emerald-200/60 flex items-center justify-center text-green-700">
+                            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-3.75h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-sm font-bold text-gray-800">No Spotlight Activities Scheduled</h4>
+                            <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
+                                There are no spotlight activities or events scheduled at this time. Check back soon!
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 @endforelse
             </div>
@@ -138,22 +172,37 @@
         </div>
         @else
         @isset($activity)
-        <div class="flex items-center justify-between">
-            <nav class="flex space-x-4" aria-label="Tabs">
-                <span @class(['cursor-pointer text-gray-500 hover:text-gray-700 font-medium', 'text-green-700' => $activity_tab == 'basic_education']) wire:click="setActivityTab('basic_education')">Basic Education</span>
-                <span @class(['cursor-pointer text-gray-500 hover:text-gray-700 font-medium', 'text-green-700' => $activity_tab == 'higher_education']) wire:click="setActivityTab('higher_education')">Higher Education</span>
-            </nav>
-        </div>
-        <div class="overflow-hidden border rounded-2xl">
-            <table class="min-w-full">
-                <thead>
-                    <tr>
-                        <th scope="col" class="uppercase py-3.5 text-center text-sm font-semibold text-gray-100 bg-green-700">Date/Time</th>
-                        <th scope="col" class="uppercase py-3.5 text-center text-sm font-semibold text-gray-100 bg-green-700">Activity Name</th>
-                        <th scope="col" class="uppercase py-3.5 text-center text-sm font-semibold text-gray-100 bg-green-700">Location</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-300">
+        <div class="space-y-6">
+            <!-- Level Toggle Pills -->
+            <div class="flex items-center gap-3">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Level:</span>
+                <button type="button" @class([
+                    'px-4 py-1.5 rounded-full text-xs font-bold transition-all',
+                    'bg-green-700 text-white shadow-xs' => $activity_tab == 'basic_education',
+                    'bg-gray-100 text-gray-600 hover:bg-gray-200' => $activity_tab != 'basic_education'
+                ]) wire:click="setActivityTab('basic_education')">
+                    Basic Education
+                </button>
+                <button type="button" @class([
+                    'px-4 py-1.5 rounded-full text-xs font-bold transition-all',
+                    'bg-green-700 text-white shadow-xs' => $activity_tab == 'higher_education',
+                    'bg-gray-100 text-gray-600 hover:bg-gray-200' => $activity_tab != 'higher_education'
+                ]) wire:click="setActivityTab('higher_education')">
+                    Higher Education
+                </button>
+            </div>
+
+            <!-- Activities Table Card -->
+            <div class="overflow-hidden bg-white border border-gray-200 rounded-2xl shadow-sm">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-green-800 to-green-900 text-white">
+                            <th scope="col" class="uppercase py-4 px-6 text-center text-xs font-bold tracking-wider">Date / Time</th>
+                            <th scope="col" class="uppercase py-4 px-6 text-center text-xs font-bold tracking-wider">Activity Name</th>
+                            <th scope="col" class="uppercase py-4 px-6 text-center text-xs font-bold tracking-wider">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
                     @php $count = 1; @endphp
 
                     @forelse ($activity[$activity_tab] ?? [] as $activity_date => $items)
@@ -172,17 +221,40 @@
                     @php $count++; @endphp
                     @empty
                     <tr>
-                        <td class="py-4 text-sm text-center text-gray-500 whitespace-nowrap" colspan="3">
-                            <span>No data available</span>
+                        <td class="py-20 sm:py-28 px-4 text-center text-gray-500" colspan="3">
+                            <div class="max-w-md mx-auto flex flex-col items-center justify-center space-y-4">
+                                <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-100/80 border border-emerald-200/60 flex items-center justify-center text-green-700 shadow-xs">
+                                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-3.75h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                    </svg>
+                                </div>
+                                <div class="space-y-1">
+                                    <h4 class="text-base sm:text-lg font-bold text-gray-800">No Spotlight Activities Scheduled</h4>
+                                    <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+                                        There are no spotlight activities or events scheduled at this time. Check back soon!
+                                    </p>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        </div>
         @else
-        <div class="mt-5">
-            <span class="text-gray-500">No data available.</span>
+        <div class="mt-5 p-8 rounded-2xl border-2 border-dashed border-gray-200 bg-white/70 text-center flex flex-col items-center justify-center space-y-3.5">
+            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-100/80 border border-emerald-200/60 flex items-center justify-center text-green-700">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-3.75h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                </svg>
+            </div>
+            <div class="space-y-1">
+                <h4 class="text-sm font-bold text-gray-800">No Spotlight Activities Scheduled</h4>
+                <p class="text-xs text-gray-500 max-w-xs mx-auto leading-relaxed">
+                    There are no spotlight activities or events scheduled at this time. Check back soon!
+                </p>
+            </div>
         </div>
         @endisset
         @endif

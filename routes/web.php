@@ -35,7 +35,7 @@ Route::prefix('event')->group(function () {
 });
 
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', App\Livewire\Pages\Admin\Home\Index::class)->name('home');
+    Route::get('/', App\Livewire\Pages\Admin\Home\Index::class)->name('admin.home');
 
     Route::prefix('event')->group(function () {
         Route::get('/', App\Livewire\Pages\Admin\Event\Index::class)->name('event');
@@ -47,4 +47,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/user', App\Livewire\Pages\Admin\User\Index::class)->name('admin.user');
     Route::get('/gallery', App\Livewire\Pages\Admin\Gallery\Index::class)->name('admin.gallery');
     Route::get('/frequently-asked-question', App\Livewire\Pages\Admin\FrequentlyAskedQuestion\Index::class)->name('admin.frequently-asked-question');
+    Route::get('/profile', App\Livewire\Pages\Admin\Profile\Index::class)->name('admin.profile');
 });

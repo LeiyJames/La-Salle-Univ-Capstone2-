@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Disable Livewire 3 / NProgress blinking spinner and flashing light */
+#nprogress,
+#nprogress .bar,
+#nprogress .spinner {
+    display: none !important;
+    pointer-events: none !important;
+}

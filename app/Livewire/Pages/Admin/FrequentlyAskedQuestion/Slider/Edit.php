@@ -32,11 +32,11 @@ class Edit extends Component
                 $faq = FAQ::find($this->faq_id);
 
                 $faq->update($this->faq);
-
-                return redirect()->route('admin.frequently-asked-question');
             });
+
+            return redirect()->route('admin.frequently-asked-question');
         } catch (\Exception $e) {
-            //throw $e;
+            session()->flash('error', $e->getMessage());
         }
     }
 

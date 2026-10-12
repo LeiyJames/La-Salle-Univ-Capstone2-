@@ -53,18 +53,18 @@ class Edit extends Component
                     'users_role' => $this->user['users_role']
                 ];
 
-                if ($this->user['users_password']) {
+                if (!empty($this->user['users_password'])) {
                     $data = array_merge($data, [
-                        'password' => Hash::make($this->user['password'])
+                        'password' => Hash::make($this->user['users_password'])
                     ]);
                 }
 
                 $user->update($data);
-
-                return redirect()->route('admin.user');
             });
+
+            return redirect()->route('admin.user');
         } catch (\Exception $e) {
-            //throw $e;
+            session()->flash('error', $e->getMessage());
         }
     }
 

@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <x-input-label for="user-password" :value="__('Password')" class="mb-1" />
-                    <x-text-input type="password" id="user-password" class="w-full" wire:model="user.users_password" />
+                    <x-password-input id="user-password" class="w-full" wire:model="user.users_password" />
 
                     @error('user.users_password')
                     <span class="mt-2 text-xs text-red-500">{{ $message }}</span>

@@ -12,21 +12,51 @@
                 </div>
             </div>
         </div>
+
+        @if (session()->has('error'))
+        <div class="rounded-xl bg-red-50 border border-red-200 p-4 text-xs text-red-800 flex items-center justify-between shadow-xs">
+            <div class="flex items-center gap-2.5">
+                <svg class="h-4 w-4 text-red-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="font-medium">{{ session('error') }}</span>
+            </div>
+        </div>
+        @endif
+
         <div class="overflow-hidden bg-white rounded-2xl">
             <div class="p-4 px-4 space-y-3 sm:p-6 sm:pb-4">
                 <div class="relative flex items-end justify-between">
                     <div>
-                        <x-input-label for="event-photo" :value="__('Photo')" class="mb-1" />
-                        <input type="file" id="event-photo" class="w-full" wire:model="file" />
+                        <x-input-label for="event-photo" :value="__('Photo (leave empty to keep current)')" class="mb-1" />
+                        <input type="file" id="event-photo" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" wire:model="file" accept="image/*" />
+
+                        <div wire:loading wire:target="file" class="text-xs text-green-600 font-medium mt-1 flex items-center gap-1.5">
+                            <svg class="animate-spin h-3.5 w-3.5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                            <span>Uploading poster preview...</span>
+                        </div>
 
                         @error('file')
-                        <span class="mt-2 text-xs text-red-500">{{ $message }}</span>
+                        <span class="mt-2 text-xs text-red-500 block">{{ $message }}</span>
                         @enderror
                     </div>
-                    <x-primary-button class="py-2.5" wire:click="preview">
+                    <x-primary-button class="py-2.5" wire:click="preview" wire:loading.attr="disabled" wire:target="file">
                         <span class="w-full text-center">{{ __('Preview') }}</span>
                     </x-primary-button>
                 </div>
+
+                @if ($file && method_exists($file, 'temporaryUrl'))
+                <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 flex items-center gap-3">
+                    <img src="{{ $file->temporaryUrl() }}" class="h-16 w-24 object-cover rounded-lg border shadow-xs" alt="New poster preview">
+                    <div class="text-xs text-gray-600">
+                        <p class="font-semibold text-gray-800">New Poster Selected</p>
+                        <p class="text-gray-400 text-[11px]">Will replace the existing event poster when saved.</p>
+                    </div>
+                </div>
+                @endif
                 <div class="grid grid-cols-2 gap-3">
                     <div class="col-span-2 md:col-span-1">
                         <div>
@@ -87,23 +117,33 @@
                     @enderror
                 </div>
                 <div>
-                    <x-input-label for="event-related-tags" :value="__('Related Tags')" class="mb-1" />
-                    <x-text-input-select type="text" class="w-full rounded-2xl" wire:model="event.events_related_tags" multiple>
-                        <option value="" selected hidden>Select</option>
-                        <option value="ccsea">CCSEA</option>
-                        <option value="cte">CTE</option>
-                        <option value="con">CON</option>
-                        <option value="cba">CBA</option>
-                        <option value="basic_education">Basic Education</option>
-                        <option value="higher_education">Higher Education</option>
-                        <option value="workshop">Workshop</option>
-                        <option value="sports">Sports</option>
-                        <option value="abo">ABO</option>
-                        <option value="ibo">IBO</option>
-                    </x-text-input-select>
+                    <x-input-label :value="__('Related Tags')" class="mb-2 font-semibold text-gray-800" />
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 p-3 rounded-xl border border-gray-200 bg-gray-50/70">
+                        @php
+                            $availableTags = [
+                                'ccsea' => 'CCSEA',
+                                'cte' => 'CTE',
+                                'con' => 'CON',
+                                'cba' => 'CBA',
+                                'basic_education' => 'Basic Education',
+                                'higher_education' => 'Higher Education',
+                                'workshop' => 'Workshop',
+                                'sports' => 'Sports',
+                                'abo' => 'ABO',
+                                'ibo' => 'IBO',
+                            ];
+                        @endphp
+                        @foreach ($availableTags as $tagKey => $tagLabel)
+                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white border border-gray-200 hover:border-green-500 hover:bg-green-50/40 cursor-pointer transition-all shadow-2xs">
+                            <input type="checkbox" value="{{ $tagKey }}" wire:model="event.events_related_tags" class="rounded text-green-700 focus:ring-green-600 border-gray-300">
+                            <span class="text-xs font-semibold text-gray-700">{{ $tagLabel }}</span>
+                        </label>
+                        @endforeach
+                    </div>
+                    <span class="text-[11px] text-gray-400 mt-1 block">Check any categories or colleges that apply to this event.</span>
 
                     @error('event.events_related_tags')
-                    <span class="mt-2 text-xs text-red-500">{{ $message }}</span>
+                    <span class="mt-2 text-xs text-red-500 block">{{ $message }}</span>
                     @enderror
                 </div>
                 <div>
@@ -150,8 +190,10 @@
                     </a>
 
                     @if (in_array(auth()->user()->users_role, ['admin', 'editor']))
-                    <x-primary-button class="py-2.5" wire:click="save" wire:target="save" wire:loading.class="pointer-events-none animate-pulse">
-                        <span class="w-full text-center">{{ __('Save Changes') }}</span>
+                    <x-primary-button class="py-2.5 bg-green-700 hover:bg-green-800 disabled:opacity-50" wire:click="save" wire:loading.attr="disabled" wire:target="file, save">
+                        <span wire:loading.remove wire:target="save, file" class="w-full text-center">{{ __('Save Changes') }}</span>
+                        <span wire:loading wire:target="file" class="w-full text-center">{{ __('Uploading Poster...') }}</span>
+                        <span wire:loading wire:target="save" class="w-full text-center">{{ __('Saving Changes...') }}</span>
                     </x-primary-button>
                     @endif
                 </div>

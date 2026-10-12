@@ -37,6 +37,15 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
+    <div class="mb-5">
+        <a href="/login" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-green-700 transition-colors" wire:navigate.hover>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span>{{ __('Back to Login') }}</span>
+        </a>
+    </div>
+
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </div>
@@ -52,7 +61,11 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-between mt-6">
+            <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 underline rounded-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" wire:navigate.hover>
+                {{ __('Back to Login') }}
+            </a>
+
             <x-primary-button>
                 {{ __('Send Link') }}
             </x-primary-button>

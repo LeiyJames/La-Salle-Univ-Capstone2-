@@ -16,6 +16,16 @@ $app = new Illuminate\Foundation\Application(
 );
 
 /*
+| Set storage path to /tmp for serverless platforms like Vercel
+*/
+if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
+    $app->useStoragePath('/tmp/storage');
+    @mkdir('/tmp/storage/framework/views', 0755, true);
+    @mkdir('/tmp/storage/framework/sessions', 0755, true);
+    @mkdir('/tmp/storage/framework/cache', 0755, true);
+}
+
+/*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
 |--------------------------------------------------------------------------

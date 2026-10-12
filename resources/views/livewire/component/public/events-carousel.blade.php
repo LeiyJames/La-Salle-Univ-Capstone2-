@@ -28,7 +28,12 @@
                 </div>
             </div>
             @empty
-            <span>No data available</span>
+            <div class="col-span-1 md:col-span-2 lg:col-span-4 p-8 rounded-2xl border-2 border-dashed border-gray-200 bg-white/70 text-center flex flex-col items-center justify-center space-y-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+                    <span>No Other Events</span>
+                </span>
+                <p class="text-xs text-gray-500">There are no additional activities scheduled at this time.</p>
+            </div>
             @endforelse
         </div>
 

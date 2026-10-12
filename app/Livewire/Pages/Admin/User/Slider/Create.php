@@ -52,12 +52,11 @@ class Create extends Component
                     'password' => Hash::make($this->user['users_password']),
                     'users_role' => $this->user['users_role'],
                 ]);
-
-                return redirect()->route('admin.user');
             });
+
+            return redirect()->route('admin.user');
         } catch (\Exception $e) {
-            //throw $e;
-            dd($e);
+            session()->flash('error', $e->getMessage());
         }
     }
 

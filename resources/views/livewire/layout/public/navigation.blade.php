@@ -1,77 +1,39 @@
-<div x-data="data">
-    <div class="bg-green-700">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
-            <a href="/" class="-m-1.5 p-1.5">
-                <span class="sr-only">LSU Student Events</span>
-                <img class="h-9 w-auto" src="{{ asset('assets/img/lsu-logotype-white 1.png') }}" alt="lsu-logotype-white">
-            </a>
-            <div class="flex lg:hidden">
-                <button 
-                    type="button"
-                    class="-m-2.5 inline-flex items-center justify-center rounded-2xl p-2.5 text-gray-700 transition-colors duration-300 hover:text-white hover:bg-gray-800"
-                    x-on:click="toggleMenu">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                </button>
+<div class="sticky top-0 z-40">
+    <div class="bg-gradient-to-r from-green-900 via-green-800 to-green-900 border-b border-green-700/70 shadow-md">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Global">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3">
+                <a href="/" wire:navigate.hover class="flex items-center gap-3 group focus:outline-none">
+                    <img class="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                         src="{{ asset('assets/img/lsu-logotype-white 1.png') }}"
+                         alt="La Salle University">
+                    <div class="hidden sm:block border-l border-green-600/60 pl-3">
+                        <span class="block text-[11px] font-black uppercase tracking-widest text-yellow-400 leading-none">Student Events</span>
+                        <span class="block text-[10px] text-green-200 tracking-wider">Activities Center</span>
+                    </div>
+                </a>
             </div>
-            <div class="hidden lg:flex lg:gap-x-8">
-                <a href="/" class="text-sm leading-6 text-gray-100 uppercase py-0.5 transition-colors duration-300 hover:text-slate-300 hover:bg-transparent">Home</a>
-                <a href="/about-us" class="text-sm leading-6 text-gray-100 uppercase py-0.5 transition-colors duration-300 hover:text-slate-300 hover:bg-transparent">About</a>
-                <a href="/login" class="text-sm leading-6 text-gray-100 uppercase py-0.5 transition-colors duration-300 hover:text-gray-950	hover:bg hover:bg-slate-200 bg-gray-950 rounded-2xl px-5">Login</a>
+
+            <!-- Right: Search or Auth CTA -->
+            <div class="flex items-center gap-3">
+                @auth
+                <a href="/admin" wire:navigate.hover
+                    class="inline-flex items-center gap-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-green-950 font-black px-4 py-2 text-xs uppercase tracking-wider shadow-sm transition-all transform active:scale-95">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                    </svg>
+                    <span>Admin Dashboard</span>
+                </a>
+                @else
+                <a href="/login" wire:navigate.hover
+                    class="inline-flex items-center gap-2 rounded-xl bg-green-950/70 hover:bg-black text-white hover:text-yellow-300 font-bold px-4 py-2 text-xs uppercase tracking-wider border border-green-600/50 shadow-sm transition-all transform active:scale-95">
+                    <svg class="h-3.5 w-3.5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                    </svg>
+                    <span>Sign In</span>
+                </a>
+                @endauth
             </div>
         </nav>
-        <!-- Mobile menu, show/hide based on menu open state. -->
-        <div role="dialog" aria-modal="true" x-show="menu">
-            <!-- Background backdrop, show/hide based on slide-over state. -->
-            <div class="fixed inset-0 z-50" x-show="menu"></div>
-            <div
-                class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-green-700 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 transition-opacity duration-300"
-                x-show="menu">
-                <div class="flex items-center justify-between">
-                    <a href="#" class="-m-1.5 p-1.5">
-                        <span class="sr-only">LSU Student Events</span>
-                        <img class="h-9 w-auto" src="{{ asset('assets/img/lsu-logotype-white 1.png') }}" alt="">
-                    </a>
-                    <button 
-                        type="button" 
-                        class="-m-2.5 rounded-2xl p-2.5 text-gray-700 transition-colors duration-300" 
-                        x-on:click="toggleMenu">
-                        <span class="sr-only">Close menu</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-gray-500/10">
-                        <div class="space-y-2 py-6">
-                            <a href="/"
-                                class="-mx-3 block rounded-2xl px-3 py-2 text-base leading-7 text-gray-100 hover:bg-gray-50 transition-colors duration-300">Home</a>
-                            <a href="/about-us"
-                                class="-mx-3 block rounded-2xl px-3 py-2 text-base leading-7 text-gray-100 hover:bg-gray-50 transition-colors duration-300">About</a>
-                            <a href="/login"
-                                class="-mx-3 block rounded-2xl px-3 py-2 text-base leading-7 text-gray-100 hover:bg-gray-50 transition-colors duration-300">Login</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('data', () => ({
-                menu: false,
-     
-                toggleMenu() {
-                    this.menu = ! this.menu
-                },
-            }))
-        })
-    </script>
 </div>
